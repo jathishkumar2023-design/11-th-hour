@@ -1,0 +1,10 @@
+{
+  "name": "11th Hour - Emergency Triage & CareContinuum",
+  "description": "AI-driven emergency room triage and post-discharge recovery care continuity platform with multilingual voice intake and nurse clinical desk.",
+  "requestFramePermissions": [
+    "microphone"
+  ],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

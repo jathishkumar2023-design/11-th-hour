@@ -1,0 +1,20 @@
+{
+  "id": "/",
+  "name": "11th Hour Emergency Triage",
+  "short_name": "11th Hour",
+  "description": "AI-driven emergency room triage and post-discharge recovery continuity platform",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#0B132B",
+  "theme_color": "#0B132B",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "192x192 512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

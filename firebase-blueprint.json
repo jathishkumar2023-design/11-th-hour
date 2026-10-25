@@ -1,0 +1,95 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "Authenticated user profile in the 11th Hour healthcare platform",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "description": "Firebase Auth user ID" },
+        "email": { "type": "string", "description": "Email address" },
+        "displayName": { "type": "string", "description": "Full name of patient or clinician" },
+        "role": { "type": "string", "enum": ["patient", "nurse", "doctor"], "description": "User role" },
+        "patientId": { "type": "string", "description": "Linked hospital patient ID e.g. P-1082" },
+        "createdAt": { "type": "string", "description": "ISO timestamp of creation" }
+      },
+      "required": ["uid", "role"]
+    },
+    "PatientProfile": {
+      "title": "PatientProfile",
+      "description": "Hospital record for emergency and post-discharge continuity",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Document ID" },
+        "patientId": { "type": "string", "description": "Hospital Patient ID" },
+        "userId": { "type": "string", "description": "Associated Firebase Auth UID" },
+        "name": { "type": "string", "description": "Patient legal name" },
+        "age": { "type": "number", "description": "Patient age in years" },
+        "gender": { "type": "string", "description": "Patient gender" },
+        "preferredLanguage": { "type": "string", "description": "English, Hindi, or Telugu" },
+        "phone": { "type": "string", "description": "Contact phone" },
+        "bloodGroup": { "type": "string", "description": "Blood group if known" },
+        "allergies": { "type": "string", "description": "Known allergies" },
+        "registeredAt": { "type": "string", "description": "Registration ISO timestamp" }
+      },
+      "required": ["patientId", "name"]
+    },
+    "TriageRecord": {
+      "title": "TriageRecord",
+      "description": "Emergency triage intake record with strict ESI classification and clinical plan",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Unique record ID" },
+        "patientId": { "type": "string", "description": "Hospital Patient ID" },
+        "userId": { "type": "string", "description": "Created by or belonging to user" },
+        "patient_name": { "type": "string", "description": "Patient display name" },
+        "age": { "type": "number", "description": "Age" },
+        "gender": { "type": "string", "description": "Gender" },
+        "transcription_raw": { "type": "string", "description": "Unstructured voice transcription" },
+        "detected_language": { "type": "string", "description": "Detected intake language" },
+        "acuity_level": { "type": "string", "enum": ["RED", "AMBER", "GREEN"], "description": "ESI Acuity" },
+        "esi_category": { "type": "string", "description": "Emergent, Urgent, Non-Urgent" },
+        "chief_complaint": { "type": "string", "description": "Structured 1-sentence chief complaint" },
+        "symptom_onset_duration": { "type": "string", "description": "Duration since onset" },
+        "nurse_status": { "type": "string", "enum": ["PENDING_REVIEW", "APPROVED", "ESCALATED", "DISCHARGED"], "description": "Status" },
+        "timestamp": { "type": "string", "description": "ISO timestamp" },
+        "intake_duration_seconds": { "type": "number", "description": "Intake speed in seconds" }
+      },
+      "required": ["patientId", "acuity_level", "chief_complaint"]
+    },
+    "RecoveryLog": {
+      "title": "RecoveryLog",
+      "description": "Patient home recovery checklist progress and vitals log",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Document ID" },
+        "patientId": { "type": "string", "description": "Patient ID" },
+        "userId": { "type": "string", "description": "User ID" },
+        "date": { "type": "string", "description": "YYYY-MM-DD" },
+        "medicationsCompleted": { "type": "number", "description": "Count of medications taken" },
+        "waterGlasses": { "type": "number", "description": "Glasses of water logged" },
+        "woundCleaned": { "type": "boolean", "description": "Whether dressing was checked" },
+        "painLevel": { "type": "number", "description": "Pain score 0-10" },
+        "updatedAt": { "type": "string", "description": "ISO timestamp" }
+      },
+      "required": ["patientId", "date"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "User auth profiles with assigned roles"
+    },
+    "/patients/{patientId}": {
+      "schema": "PatientProfile",
+      "description": "Clinical patient demographic profiles"
+    },
+    "/triage_records/{recordId}": {
+      "schema": "TriageRecord",
+      "description": "Emergency triage records and clinical pre-orders"
+    },
+    "/recovery_logs/{logId}": {
+      "schema": "RecoveryLog",
+      "description": "Daily home care checklist progress"
+    }
+  }
+}
